@@ -1,15 +1,47 @@
-import { getUserStats } from '../../../pages/api/trakt';
+import { useEffect, useState } from 'react';
 import { CardDetails } from './card-details';
+import { getUserStats } from '../../../pages/api/trakt';
 
-export function GeneralInfo() {
-  // const userStats = await getUserStats('ozzs');
+type StatsProps = {
+  movies: {
+    watched: number;
+  };
+  shows: {
+    watched: number;
+  };
+  episodes: {
+    watched: number;
+  };
+};
+
+export function GeneralInfo({ userNameValue }: { userNameValue: string }) {
+  const [userStats, setUserStats] = useState<StatsProps | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fetch the user stats
+  useEffect(() => {
+    if (userNameValue) {
+      getUserStats(userNameValue)
+        // Set the user stats
+        .then((data) => setUserStats(data))
+        // Set the loading state to false
+        .then(() => setIsLoading(false))
+        // Catch any errors
+        .catch((error) => console.error(error));
+    }
+  }, [userNameValue]);
 
   return (
-    <div className="flex justify-evenly items-stretch">
-      <CardDetails title="Movies" amount={0} />
-      <CardDetails title="Shows" amount={0} />
-      <CardDetails title="Seasons" amount={0} />
-      <CardDetails title="Episodes" amount={0} />
-    </div>
+    <>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <div className="flex justify-evenly items-stretch">
+          <CardDetails title="Movies" amount={userStats?.movies?.watched || 0} />
+          <CardDetails title="Shows" amount={userStats?.shows?.watched || 0} />
+          <CardDetails title="Episodes" amount={userStats?.episodes?.watched || 0} />
+        </div>
+      )}
+    </>
   );
 }

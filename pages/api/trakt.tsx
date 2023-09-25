@@ -1,32 +1,49 @@
 import axios from 'axios';
-import { NextApiRequest, NextApiResponse } from 'next';
 
 const TRAKT_BASE_URL = 'https://api.trakt.tv';
-const TRAKT_API_KEY = process.env.TRAKT_API_KEY;
+const TRAKT_API_KEY = process.env.NEXT_PUBLIC_TRAKT_API_KEY;
+const HEADERS = {
+  'Content-Type': 'application/json',
+  'trakt-api-key': TRAKT_API_KEY,
+  'trakt-api-version': 2
+};
 
 export const getUserStats = async (user: string) => {
   try {
+    // Invoke the API call
     const response = await axios.get(`${TRAKT_BASE_URL}/users/${user}/stats`, {
-      headers: {
-        'Content-Type': 'application/json',
-        'trakt-api-key': TRAKT_API_KEY,
-        'trakt-api-version': 2
-      }
+      headers: HEADERS
     });
+    console.log(`Response: ${JSON.stringify(response.data)}`);
+
     return response.data;
   } catch (error) {
-    throw new Error('Error fetching movie details');
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 404) {
+        throw new Error(`User '${user}' not found`);
+      }
+    } else {
+      console.error('Error: ', error);
+    }
   }
 };
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  res.status(404).json({ error: 'Endpoint not found' });
-};
-
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export const getUserInfo = async (user: string) => {
   try {
-    await handler(req, res);
+    // Invoke the API call
+    const response = await axios.get(`${TRAKT_BASE_URL}/users/${user}`, {
+      headers: HEADERS
+    });
+    console.log(`Response: ${JSON.stringify(response.data)}`);
+
+    return response.data;
   } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' });
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 404) {
+        throw new Error(`User '${user}' not found`);
+      }
+    } else {
+      console.error('Error: ', error);
+    }
   }
 };
