@@ -1,4 +1,3 @@
-import { CardDetails } from '@/components/general-info/card-details';
 import { Separator } from '@/components/ui/separator';
 import { Header } from '@/components/header/header';
 import { GeneralInfo } from '@/components/general-info/general-info';
