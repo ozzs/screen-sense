@@ -14,7 +14,7 @@ export const getUserStats = async (user: string) => {
     const response = await axios.get(`${TRAKT_BASE_URL}/users/${user}/stats`, {
       headers: HEADERS
     });
-    console.log(`Response: ${JSON.stringify(response.data)}`);
+    console.log(`User Stats Received: ${JSON.stringify(response.data)}`);
 
     return response.data;
   } catch (error) {
@@ -34,7 +34,7 @@ export const getUserInfo = async (user: string) => {
     const response = await axios.get(`${TRAKT_BASE_URL}/users/${user}`, {
       headers: HEADERS
     });
-    console.log(`Response: ${JSON.stringify(response.data)}`);
+    console.log(`User Info response: ${JSON.stringify(response.data)}`);
 
     return response.data;
   } catch (error) {

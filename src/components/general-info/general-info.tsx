@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { CardDetails } from './card-details';
 import { getUserStats } from '../../../pages/api/trakt';
+import { Skeleton } from '@/components/ui/skeleton';
 
 type StatsProps = {
   movies: {
@@ -20,21 +21,23 @@ export function GeneralInfo({ userNameValue }: { userNameValue: string }) {
 
   // Fetch the user stats
   useEffect(() => {
-    if (userNameValue) {
-      getUserStats(userNameValue)
-        // Set the user stats
-        .then((data) => setUserStats(data))
-        // Set the loading state to false
-        .then(() => setIsLoading(false))
-        // Catch any errors
-        .catch((error) => console.error(error));
-    }
+    getUserStats(userNameValue)
+      // Set the user stats
+      .then((data) => setUserStats(data))
+      // Set the loading state to false
+      .then(() => setIsLoading(false))
+      // Catch any errors
+      .catch((error) => console.error(error));
   }, [userNameValue]);
 
   return (
     <>
       {isLoading ? (
-        <div>Loading...</div>
+        <div className="flex justify-evenly items-stretch">
+          <Skeleton className="m-4 h-48 flex-grow text-center flex flex-col justify-center items-center" />
+          <Skeleton className="m-4 h-48 flex-grow text-center flex flex-col justify-center items-center" />
+          <Skeleton className="m-4 h-48 flex-grow text-center flex flex-col justify-center items-center" />
+        </div>
       ) : (
         <div className="flex justify-evenly items-stretch">
           <CardDetails title="Movies" amount={userStats?.movies?.watched || 0} />

@@ -3,7 +3,7 @@ import { Separator } from '@/components/ui/separator';
 import { Header } from '@/components/header/header';
 import { GeneralInfo } from '@/components/general-info/general-info';
 import { TabsDetails } from '@/components/tabs/tabs';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { getUserInfo } from '../../pages/api/trakt';
 import Loader from '@/components/ui/loader';
 
@@ -34,7 +34,7 @@ export default function Page() {
         <Loader isLoading={isLoading} />
       ) : (
         <>
-          {!hasSearched && !userNameValue && (
+          {!hasSearched && (
             <div className="flex justify-center items-center h-screen">
               Please Enter a User Name
             </div>
@@ -43,7 +43,7 @@ export default function Page() {
             <>
               <Separator />
               <GeneralInfo userNameValue={userNameValue} />
-              <TabsDetails />
+              <TabsDetails userNameValue={userNameValue} />
             </>
           )}
         </>

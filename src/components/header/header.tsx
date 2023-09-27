@@ -23,6 +23,13 @@ export const Header = (props: SearchProps) => {
     handleSearch(userName);
   };
 
+  // On "Enter" key button press
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch(userName);
+    }
+  };
+
   return (
     <div className="flex m-4">
       <Input
@@ -30,6 +37,7 @@ export const Header = (props: SearchProps) => {
         placeholder="User Name"
         className="mr-4"
         onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
       />
       <Button onClick={handleSearchClick}> Search </Button>
     </div>

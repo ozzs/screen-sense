@@ -1,64 +1,58 @@
 'use client';
 
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
+import { useEffect, useState } from 'react';
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts';
+import { getUserStats } from '../../../pages/api/trakt';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 
-const data = [
-  {
-    name: 1,
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: 2,
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: 3,
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: 4,
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: 5,
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: 6,
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: 7,
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: 8,
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: 9,
-    total: Math.floor(Math.random() * 5000) + 1000
-  },
-  {
-    name: 10,
-    total: Math.floor(Math.random() * 5000) + 1000
-  }
-];
+export function RatingsChart({ userNameValue }: { userNameValue: string }) {
+  const [barChartData, setBarChartData] = useState<any[] | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState(false);
 
-export function Overview() {
+  // Fetch the ratings data
+  useEffect(() => {
+    getUserStats(userNameValue)
+      .then((data) => {
+        // Convert ratings distribution object to an array of objects
+        const ratingsArray = Object.entries(data.ratings.distribution).map(([key, value]) => ({
+          name: key,
+          total: value
+        }));
+        setBarChartData(ratingsArray);
+      })
+      // Set the loading state to false
+      .then(() => setIsLoading(false))
+      // Catch any errors
+      .catch((error) => console.error(error));
+  }, [userNameValue]);
+
   return (
-    <ResponsiveContainer width="90%" height={500}>
-      <BarChart data={data}>
-        <XAxis dataKey="name" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
-        <YAxis
-          stroke="#888888"
-          fontSize={12}
-          tickLine={false}
-          axisLine={false}
-          tickFormatter={(value) => `$${value}`}
-        />
-        <Bar dataKey="total" fill="#2f9e44" radius={[4, 4, 0, 0]} />
-      </BarChart>
-    </ResponsiveContainer>
+    <Card className="mx-48 h-full">
+      <CardHeader>
+        <CardTitle> Rating Distribution </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ResponsiveContainer width="100%" height={350}>
+          <BarChart data={barChartData}>
+            <XAxis
+              dataKey="name"
+              stroke="#888888"
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+            />
+            <YAxis
+              stroke="#888888"
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+              tickFormatter={(value) => `${value}`}
+            />
+            <Tooltip formatter={(value) => value} />
+            <Bar dataKey="total" fill="#2f9e44" radius={[4, 4, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      </CardContent>
+    </Card>
   );
 }

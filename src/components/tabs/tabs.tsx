@@ -1,7 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Overview } from '../bar-chart/bar-chart';
+import { RatingsChart } from '../bar-chart/bar-chart';
 
-export function TabsDetails() {
+export function TabsDetails({ userNameValue }: { userNameValue: string }) {
   return (
     <Tabs defaultValue="shows" className="flex flex-col text-center">
       <TabsList className="space-x-48">
@@ -13,7 +13,7 @@ export function TabsDetails() {
       <TabsContent value="shows"> Shows List </TabsContent>
       <TabsContent value="movies"> Movies List </TabsContent>
       <TabsContent value="ratings">
-        <Overview />
+        <RatingsChart userNameValue={userNameValue} />
       </TabsContent>
       <TabsContent value="genres"> Genres Pie Chart </TabsContent>
     </Tabs>
