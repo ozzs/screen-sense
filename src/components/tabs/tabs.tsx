@@ -1,5 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { RatingsChart } from '../bar-chart/bar-chart';
+import { TotalRatingChart } from '../bar-chart/total-rating-chart';
+import { DetailedRatingChart } from '../bar-chart/detailed-rating-chart';
+import { RatingChartsContainer } from '../bar-chart/rating-charts-container';
 
 export function TabsDetails({ userNameValue }: { userNameValue: string }) {
   return (
@@ -13,7 +15,7 @@ export function TabsDetails({ userNameValue }: { userNameValue: string }) {
       <TabsContent value="shows"> Shows List </TabsContent>
       <TabsContent value="movies"> Movies List </TabsContent>
       <TabsContent value="ratings">
-        <RatingsChart userNameValue={userNameValue} />
+        <RatingChartsContainer userNameValue={userNameValue} />
       </TabsContent>
       <TabsContent value="genres"> Genres Pie Chart </TabsContent>
     </Tabs>
