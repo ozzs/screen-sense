@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
-import { DetailedRatingChart } from './detailed-rating-chart';
-import { TotalRatingChart } from './total-rating-chart';
+import { useState } from 'react';
+import { useQuery } from 'react-query';
 import { getUserStats } from '../../../pages/api/trakt';
 import { Skeleton } from '../ui/skeleton';
+import { DetailedRatingChart } from './DetailedRatingChart';
+import { TotalRatingChart } from './TotalRatingChart';
 
 interface UserStats {
   movies: {
@@ -25,7 +26,6 @@ interface UserStats {
 export function RatingChartsContainer({ userNameValue }: { userNameValue: string }) {
   const [totalBarChartData, setTotalBarChartData] = useState<any[] | undefined>(undefined);
   const [detailedBarChartData, setDetailedBarChartData] = useState<any[] | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState(true);
 
   // Update the detailed bar chart data
   const updateDetailedChartData = (userStats: UserStats) => {
@@ -48,18 +48,14 @@ export function RatingChartsContainer({ userNameValue }: { userNameValue: string
     setTotalBarChartData(totalData);
   };
 
-  // Fetch the ratings data
-  useEffect(() => {
-    getUserStats(userNameValue)
-      .then((userStats) => {
-        updateDetailedChartData(userStats);
-        updateTotalChartData(userStats);
-      })
-      // Set the loading state to false
-      .then(() => setIsLoading(false))
-      // Catch any errors
-      .catch((error) => console.error(error));
-  }, [userNameValue]);
+  const { isLoading } = useQuery({
+    queryKey: ['getUserStats'],
+    queryFn: () => getUserStats(userNameValue),
+    onSuccess: (data) => {
+      updateDetailedChartData(data);
+      updateTotalChartData(data);
+    }
+  });
 
   return (
     <div className="grid grid-cols-2 gap-4 m-4">

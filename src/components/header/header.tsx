@@ -1,15 +1,13 @@
 'use client';
+import { useUserContext } from '@/app/context/UserContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useUserContext } from '@/app/context/UserContext';
-import { getUserStats } from '../../../pages/api/trakt';
 
 type SearchProps = {
-  handleSearch: (value: string) => void;
+  handleSearch: (userNameValue: string) => void;
 };
 
-export const Header = (props: SearchProps) => {
-  const { handleSearch } = props;
+export const Header = ({ handleSearch }: SearchProps) => {
   const { userName, setUserName } = useUserContext();
 
   // Set the userName state
@@ -26,16 +24,18 @@ export const Header = (props: SearchProps) => {
   // On "Enter" key button press
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
+      console.log(`Searching for user name: ${userName}`);
       handleSearch(userName);
     }
   };
 
   return (
-    <div className="flex m-4">
+    <div className="flex m-4 items-center space-x-4">
+      <img src="/logo.png" alt="Logo" className="w-56" />
       <Input
         type="userName"
         placeholder="User Name"
-        className="mr-4"
+        className="mr-4 text-center"
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
       />

@@ -2,7 +2,7 @@ import { Card, CardDescription, CardTitle } from '@/components/ui/card';
 
 type CardDetails = {
   title: string;
-  amount: number;
+  amount: string;
 };
 
 export function CardDetails({ title, amount }: CardDetails) {
