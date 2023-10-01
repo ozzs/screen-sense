@@ -1,14 +1,13 @@
-'use client';
-import { useUserContext } from '@/app/context/UserContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useState } from 'react';
 
 type SearchProps = {
   handleSearch: (userNameValue: string) => void;
 };
 
 export const Header = ({ handleSearch }: SearchProps) => {
-  const { userName, setUserName } = useUserContext();
+  const [userName, setUserName] = useState('');
 
   // Set the userName state
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
