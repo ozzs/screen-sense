@@ -51,6 +51,7 @@ export function RatingChartsContainer({ userNameValue }: { userNameValue: string
   const { isLoading } = useQuery({
     queryKey: ['getUserStats'],
     queryFn: () => getUserStats(userNameValue),
+    refetchOnWindowFocus: false,
     onSuccess: (data) => {
       updateDetailedChartData(data);
       updateTotalChartData(data);

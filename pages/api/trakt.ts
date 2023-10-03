@@ -47,3 +47,26 @@ export const getUserInfo = async (user: string) => {
     }
   }
 };
+
+export const getWatched = async (user: string, type: string, extended: string | null) => {
+  try {
+    // Invoke the API call
+    const response = await axios.get(
+      `${TRAKT_BASE_URL}/users/${user}/watched/${type}?extended=full`,
+      {
+        headers: HEADERS
+      }
+    );
+    console.log(`Watched ${type} response: ${JSON.stringify(response.data)}`);
+
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 404) {
+        throw new Error(`Data not found`);
+      }
+    } else {
+      console.error('Error: ', error);
+    }
+  }
+};

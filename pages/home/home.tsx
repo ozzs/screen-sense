@@ -1,4 +1,3 @@
-'use client';
 import { GeneralInfo } from '@/components/general-info/GeneralInfo';
 import { Header } from '@/components/header/Header';
 import { TabsDetails } from '@/components/tabs/TabsDetails';
@@ -11,18 +10,19 @@ import { useQuery } from 'react-query';
 import { getUserInfo } from '../../pages/api/trakt';
 
 export default function Home() {
-  const [userNameValue, setUserNameValue] = useState('');
+  const [userName, setUserName] = useState('');
   const [hasSearched, setHasSearched] = useState(false);
 
   const handleSearch = async (value: string) => {
     setHasSearched(true);
-    setUserNameValue(value);
+    setUserName(value);
   };
 
   const { isLoading, error } = useQuery<boolean, Error>({
-    queryKey: ['getUserInfo', userNameValue],
-    queryFn: () => getUserInfo(userNameValue),
-    enabled: !!userNameValue,
+    queryKey: ['getUserInfo', userName],
+    queryFn: () => getUserInfo(userName),
+    // Only fetch when userName exists!
+    enabled: !!userName,
     refetchOnWindowFocus: false
   });
 
@@ -49,10 +49,10 @@ export default function Home() {
                   Please Enter a User Name
                 </div>
               )}
-              {userNameValue && (
+              {userName && (
                 <>
-                  <GeneralInfo userNameValue={userNameValue} />
-                  <TabsDetails userNameValue={userNameValue} />
+                  <GeneralInfo userNameValue={userName} />
+                  <TabsDetails userNameValue={userName} />
                 </>
               )}
             </>
