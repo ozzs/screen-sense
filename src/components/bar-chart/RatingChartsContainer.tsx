@@ -48,7 +48,7 @@ export function RatingChartsContainer({ userNameValue }: { userNameValue: string
     setTotalBarChartData(totalData);
   };
 
-  const { isLoading } = useQuery({
+  useQuery({
     queryKey: ['getUserStats'],
     queryFn: () => getUserStats(userNameValue),
     refetchOnWindowFocus: false,
@@ -60,7 +60,7 @@ export function RatingChartsContainer({ userNameValue }: { userNameValue: string
 
   return (
     <div className="grid grid-cols-2 gap-4 m-4">
-      {isLoading ? (
+      {!totalBarChartData && !detailedBarChartData ? (
         <>
           <Skeleton className="h-96" />
           <Skeleton className="h-96" />
