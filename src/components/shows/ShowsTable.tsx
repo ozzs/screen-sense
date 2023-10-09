@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { getWatched } from '../../../pages/api/trakt';
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '../ui/table';
-import { ShowRow } from './ShowRow';
+import { ShowCard } from './ShowRow';
 import { ShowProps } from './show-type';
 
 type ShowRawProps = {
@@ -16,7 +16,7 @@ type ShowRawProps = {
   };
 };
 
-export function ShowsTable({ userNameValue }: { userNameValue: string }) {
+export function ShowCardsContainer({ userNameValue }: { userNameValue: string }) {
   const [shows, setShows] = useState<ShowProps[] | null>(null);
 
   const updateShows = (data: ShowRawProps[]) => {
@@ -45,19 +45,8 @@ export function ShowsTable({ userNameValue }: { userNameValue: string }) {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <div className="m-4">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="text-center"> Name </TableHead>
-                <TableHead className="text-center"> Status </TableHead>
-                <TableHead className="text-center"> Network </TableHead>
-                <TableHead className="text-center"> Year </TableHead>
-                <TableHead className="text-center"> Rating </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>{shows?.map((show) => <ShowRow key={show.tmdbId} show={show} />)}</TableBody>
-          </Table>
+        <div className="grid grid-cols-4 gap-4 m-4">
+          {shows?.map((show) => <ShowCard key={show.tmdbId} show={show} />)}
         </div>
       )}
     </>
