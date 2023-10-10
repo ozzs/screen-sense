@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { MediaTypeTMDB, getDetails } from '../../../pages/api/tmdb';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '../ui/hover-card';
-import { MovieHoverCardProps, MovieProps } from './movie-type';
+import { MovieHoverCardProps, MovieProps } from '../../types/movie-type';
 
 export function MovieCard({ movie }: { movie: MovieProps }) {
   const [isHovered, setIsHovered] = useState(false);

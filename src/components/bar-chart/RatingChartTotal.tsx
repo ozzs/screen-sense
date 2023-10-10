@@ -2,7 +2,7 @@ import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recha
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { BarChartDataType } from './bar-chart-type';
 
-export function TotalRatingChart({
+export function RatingChartTotal({
   totalBarChartData
 }: {
   totalBarChartData: BarChartDataType[] | undefined;

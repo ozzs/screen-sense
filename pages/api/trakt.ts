@@ -43,7 +43,7 @@ export const getUserStats = async (user: string) => {
   }
 };
 
-export const getWatched = async (user: string, type: MediaTypeTRAKT, extended: string | null) => {
+export const getWatched = async (user: string, type: MediaTypeTRAKT) => {
   try {
     // Invoke the API call
     const response = await traktAxios.get(`/users/${user}/watched/${type}?extended=full`);

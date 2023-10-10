@@ -1,8 +1,6 @@
-export type MovieProps = {
-  tmdbId: number;
-  title: string;
-  year: number;
-  rating: number;
+import { CommonProps } from './common-type';
+
+export type MovieProps = CommonProps & {
   certification: string;
 };
 

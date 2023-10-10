@@ -1,10 +1,8 @@
-export type ShowProps = {
-  tmdbId: number;
-  title: string;
+import { CommonProps } from './common-type';
+
+export type ShowProps = CommonProps & {
   status: string;
   network: string;
-  year: number;
-  rating: number;
 };
 
 export type ShowHoverCardProps = {

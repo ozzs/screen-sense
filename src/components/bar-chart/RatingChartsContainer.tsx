@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { getUserStats } from '../../../pages/api/trakt';
 import { Skeleton } from '../ui/skeleton';
-import { DetailedRatingChart } from './DetailedRatingChart';
-import { TotalRatingChart } from './TotalRatingChart';
+import { RatingChartDetailed } from './RatingChartDetailed';
+import { RatingChartTotal } from './RatingChartTotal';
 
 interface UserStats {
   movies: {
@@ -67,8 +67,8 @@ export function RatingChartsContainer({ userNameValue }: { userNameValue: string
         </>
       ) : (
         <>
-          <TotalRatingChart totalBarChartData={totalBarChartData} />
-          <DetailedRatingChart detailedBarChartData={detailedBarChartData} />
+          <RatingChartTotal totalBarChartData={totalBarChartData} />
+          <RatingChartDetailed detailedBarChartData={detailedBarChartData} />
         </>
       )}
     </div>

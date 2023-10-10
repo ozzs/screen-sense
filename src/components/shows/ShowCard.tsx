@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { MediaTypeTMDB, getDetails } from '../../../pages/api/tmdb';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '../ui/hover-card';
-import { ShowHoverCardProps, ShowProps } from './show-type';
+import { ShowHoverCardProps, ShowProps } from '../../types/show-type';
 
 export function ShowCard({ show }: { show: ShowProps }) {
   const [isHovered, setIsHovered] = useState(false);
