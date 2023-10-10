@@ -1,72 +1,58 @@
 import axios from 'axios';
+import { handleAxiosError } from './exceptions';
 
-const TRAKT_BASE_URL = 'https://api.trakt.tv';
-const TRAKT_API_KEY = process.env.NEXT_PUBLIC_TRAKT_API_KEY;
-const HEADERS = {
-  'Content-Type': 'application/json',
-  'trakt-api-key': TRAKT_API_KEY,
-  'trakt-api-version': 2
-};
+export enum MediaTypeTRAKT {
+  MOVIES = 'movies',
+  SHOWS = 'shows'
+}
+
+const traktAxios = axios.create({
+  baseURL: 'https://api.trakt.tv',
+  headers: {
+    'Content-Type': 'application/json',
+    'trakt-api-key': process.env.NEXT_PUBLIC_TRAKT_API_KEY,
+    'trakt-api-version': 2
+  }
+});
 
 export const getUserStats = async (user: string) => {
   try {
     // Invoke the API call
-    const response = await axios.get(`${TRAKT_BASE_URL}/users/${user}/stats`, {
-      headers: HEADERS
-    });
+    const response = await traktAxios.get(`/users/${user}/stats`);
     console.log(`User Stats Received: ${JSON.stringify(response.data)}`);
 
     return response.data;
+
+    // Handle errors
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      if (error.response?.status === 404) {
-        throw new Error(`User '${user}' not found`);
-      }
-    } else {
-      console.error('Error: ', error);
-    }
+    handleAxiosError(error);
   }
 };
 
 export const getUserInfo = async (user: string) => {
   try {
     // Invoke the API call
-    const response = await axios.get(`${TRAKT_BASE_URL}/users/${user}`, {
-      headers: HEADERS
-    });
+    const response = await traktAxios.get(`/users/${user}`);
     console.log(`User Info response: ${JSON.stringify(response.data)}`);
 
     return response.data;
+
+    // Handle errors
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      if (error.response?.status === 404) {
-        throw new Error(`User '${user}' not found`);
-      }
-    } else {
-      console.error('Error: ', error);
-    }
+    handleAxiosError(error);
   }
 };
 
-export const getWatched = async (user: string, type: string, extended: string | null) => {
+export const getWatched = async (user: string, type: MediaTypeTRAKT, extended: string | null) => {
   try {
     // Invoke the API call
-    const response = await axios.get(
-      `${TRAKT_BASE_URL}/users/${user}/watched/${type}?extended=full`,
-      {
-        headers: HEADERS
-      }
-    );
+    const response = await traktAxios.get(`/users/${user}/watched/${type}?extended=full`);
     console.log(`Watched ${type} response: ${JSON.stringify(response.data)}`);
 
     return response.data;
+
+    // Handle errors
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      if (error.response?.status === 404) {
-        throw new Error(`Data not found`);
-      }
-    } else {
-      console.error('Error: ', error);
-    }
+    handleAxiosError(error);
   }
 };

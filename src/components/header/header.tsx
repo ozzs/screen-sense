@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Search } from 'lucide-react';
 import { useState } from 'react';
 
 type SearchProps = {
@@ -38,7 +39,9 @@ export const Header = ({ handleSearch }: SearchProps) => {
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
       />
-      <Button onClick={handleSearchClick}> Search </Button>
+      <Button onClick={handleSearchClick}>
+        <Search className="w-4 h-4 mr-2" /> Search
+      </Button>
     </div>
   );
 };

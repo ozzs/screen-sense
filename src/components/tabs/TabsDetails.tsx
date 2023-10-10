@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RatingChartsContainer } from '../bar-chart/RatingChartsContainer';
-import { ShowCardsContainer } from '../shows/ShowsTable';
+import { ShowCardsContainer } from '../shows/ShowCardsContainer';
 
 export function TabsDetails({ userNameValue }: { userNameValue: string }) {
   return (

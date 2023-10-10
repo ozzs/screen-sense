@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { getWatched } from '../../../pages/api/trakt';
-import { Table, TableBody, TableHead, TableHeader, TableRow } from '../ui/table';
-import { ShowCard } from './ShowRow';
+import { ShowCard } from './ShowCard';
 import { ShowProps } from './show-type';
+import { MediaTypeTRAKT } from '../../../pages/api/trakt';
 
 type ShowRawProps = {
   show: {
@@ -33,7 +33,7 @@ export function ShowCardsContainer({ userNameValue }: { userNameValue: string })
 
   const { isLoading } = useQuery({
     queryKey: ['getWatchedShows'],
-    queryFn: () => getWatched(userNameValue, 'shows', 'full'),
+    queryFn: () => getWatched(userNameValue, MediaTypeTRAKT.SHOWS, 'full'),
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
       updateShows(data);
