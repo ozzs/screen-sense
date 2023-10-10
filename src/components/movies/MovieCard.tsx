@@ -4,15 +4,15 @@ import { useQuery } from 'react-query';
 import { MediaTypeTMDB, getDetails } from '../../../pages/api/tmdb';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '../ui/hover-card';
-import { ShowHoverCardProps, ShowProps } from './show-type';
+import { MovieHoverCardProps, MovieProps } from './movie-type';
 
-export function ShowCard({ show }: { show: ShowProps }) {
+export function MovieCard({ movie }: { movie: MovieProps }) {
   const [isHovered, setIsHovered] = useState(false);
-  const [hoverCardDetails, setHoverCardDetails] = useState<ShowHoverCardProps | null>(null);
+  const [hoverCardDetails, setHoverCardDetails] = useState<MovieHoverCardProps | null>(null);
 
   useQuery({
-    queryKey: ['getDetails', isHovered, show.tmdbId],
-    queryFn: () => getDetails(MediaTypeTMDB.TV, show.tmdbId),
+    queryKey: ['getDetails', isHovered, movie.tmdbId],
+    queryFn: () => getDetails(MediaTypeTMDB.MOVIE, movie.tmdbId),
     refetchOnWindowFocus: false,
     enabled: isHovered,
     onSuccess: (data) => {
@@ -29,16 +29,15 @@ export function ShowCard({ show }: { show: ShowProps }) {
           onMouseLeave={() => setIsHovered(false)}
         >
           <CardHeader>
-            <CardTitle className="text-lg"> {show.title} </CardTitle>
+            <CardTitle className="text-lg"> {movie.title} </CardTitle>
             <CardDescription className="flex items-center">
               <Star className="w-4 h-4 mr-1" />
-              {show.rating}
+              {movie.rating}
             </CardDescription>
             <CardContent className="p-0">
               <div className="text-sm text-gray-500 mb-5">
-                {show.year} - {show.network}
+                {movie.year} - {movie.certification}
               </div>
-              <div className="text-sm text-gray-500 font-bold">{show.status}</div>
             </CardContent>
           </CardHeader>
         </Card>
@@ -52,11 +51,11 @@ export function ShowCard({ show }: { show: ShowProps }) {
             <img
               className="h-60 w-52 rounded-l-md"
               src={`https://image.tmdb.org/t/p/original/${hoverCardDetails.poster_path}`}
-              alt={hoverCardDetails.name}
+              alt={hoverCardDetails.title}
             />
             <div className="flex flex-col m-4 justify-around items-center">
               <div className="flex text-base text-center font-semibold">
-                {hoverCardDetails.name}
+                {hoverCardDetails.title}
               </div>
 
               <div className="flex">
@@ -71,13 +70,11 @@ export function ShowCard({ show }: { show: ShowProps }) {
               </div>
 
               <div className="text-sm text-gray-500 flex items-center">
-                {hoverCardDetails.number_of_seasons} seasons, {hoverCardDetails.number_of_episodes}{' '}
-                episodes
+                {hoverCardDetails.runtime} minutes
               </div>
 
               <div className="text-sm text-gray-500">
-                {hoverCardDetails.first_air_date.replace(/-/g, '/')} -{' '}
-                {hoverCardDetails.last_air_date.replace(/-/g, '/')}
+                {hoverCardDetails.release_date.replace(/-/g, '/')}
               </div>
             </div>
           </div>

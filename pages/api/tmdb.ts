@@ -19,7 +19,6 @@ export const getDetails = async (type: MediaTypeTMDB, id: number) => {
     const response = await axios.get(`${TMDB_BASE_URL}/${type}/${id}`, {
       headers: HEADERS
     });
-    console.log(`Details Received: ${JSON.stringify(response.data)}`);
 
     return response.data;
   } catch (error) {

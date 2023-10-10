@@ -43,7 +43,9 @@ export function ShowCardsContainer({ userNameValue }: { userNameValue: string })
   return (
     <>
       {isLoading ? (
-        <div>Loading...</div>
+        <div className="flex justify-center h-screen mt-10">
+          <div className="border-gray-300 h-16 w-16 animate-spin rounded-full border-8 border-t-blue-600" />
+        </div>
       ) : (
         <div className="grid grid-cols-4 gap-4 m-4">
           {shows?.map((show) => <ShowCard key={show.tmdbId} show={show} />)}

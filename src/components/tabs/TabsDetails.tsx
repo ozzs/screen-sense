@@ -1,6 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RatingChartsContainer } from '../bar-chart/RatingChartsContainer';
 import { ShowCardsContainer } from '../shows/ShowCardsContainer';
+import { MovieCardsContainer } from '../movies/MovieCardsContainer';
 
 export function TabsDetails({ userNameValue }: { userNameValue: string }) {
   return (
@@ -14,7 +15,9 @@ export function TabsDetails({ userNameValue }: { userNameValue: string }) {
       <TabsContent value="shows">
         <ShowCardsContainer userNameValue={userNameValue} />
       </TabsContent>
-      <TabsContent value="movies"> Movies List </TabsContent>
+      <TabsContent value="movies">
+        <MovieCardsContainer userNameValue={userNameValue} />{' '}
+      </TabsContent>
       <TabsContent value="ratings">
         <RatingChartsContainer userNameValue={userNameValue} />
       </TabsContent>

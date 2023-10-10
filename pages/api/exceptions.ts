@@ -1,9 +1,8 @@
 import axios from 'axios';
-import http from 'http';
 
 export const handleAxiosError = (error: unknown) => {
   if (axios.isAxiosError(error)) {
-    if (error.response?.status === http.STATUS_CODES.NOT_FOUND) {
+    if (error.response?.status === 404) {
       throw new Error('Data not found');
     }
   } else {

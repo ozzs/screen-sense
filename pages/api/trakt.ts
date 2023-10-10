@@ -15,11 +15,11 @@ const traktAxios = axios.create({
   }
 });
 
-export const getUserStats = async (user: string) => {
+export const getUserInfo = async (user: string) => {
   try {
     // Invoke the API call
-    const response = await traktAxios.get(`/users/${user}/stats`);
-    console.log(`User Stats Received: ${JSON.stringify(response.data)}`);
+    const response = await traktAxios.get(`/users/${user}`);
+    console.log(`Validated user name: ${JSON.stringify(response.data.username)} successfully!`);
 
     return response.data;
 
@@ -29,11 +29,11 @@ export const getUserStats = async (user: string) => {
   }
 };
 
-export const getUserInfo = async (user: string) => {
+export const getUserStats = async (user: string) => {
   try {
     // Invoke the API call
-    const response = await traktAxios.get(`/users/${user}`);
-    console.log(`User Info response: ${JSON.stringify(response.data)}`);
+    const response = await traktAxios.get(`/users/${user}/stats`);
+    console.log(`User Stats Received!`);
 
     return response.data;
 
@@ -47,7 +47,7 @@ export const getWatched = async (user: string, type: MediaTypeTRAKT, extended: s
   try {
     // Invoke the API call
     const response = await traktAxios.get(`/users/${user}/watched/${type}?extended=full`);
-    console.log(`Watched ${type} response: ${JSON.stringify(response.data)}`);
+    console.log(`Watched ${type} data received!`);
 
     return response.data;
 
